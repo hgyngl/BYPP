@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display:block" width="309" height="824" viewBox="0 0 309 824" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wood" x1="18" y1="70" x2="292" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A5683F"/>
+      <stop offset="0.46" stop-color="#894F2A"/>
+      <stop offset="1" stop-color="#733C20"/>
+    </linearGradient>
+    <radialGradient id="knob" cx="0" cy="0" r="1" gradientTransform="translate(262 513) rotate(125) scale(31)">
+      <stop stop-color="#FFE3A0"/>
+      <stop offset="0.42" stop-color="#D59B3E"/>
+      <stop offset="1" stop-color="#754719"/>
+    </radialGradient>
+  </defs>
+  <path d="M8 816V177C8 84 73 8 154 8C235 8 301 84 301 177V816H8Z" fill="url(#wood)" stroke="#542F1C" stroke-width="16" stroke-linejoin="round"/>
+  <path d="M40 152C54 89 101 47 154 47" stroke="#F0BC88" stroke-opacity=".2" stroke-width="22" stroke-linecap="round"/>
+  <path d="M74 116V801M154 48V801M235 116V801" stroke="#60351F" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>
+  <path d="M26 391C91 381 222 382 286 394L285 458C208 447 98 449 25 458L26 391Z" fill="#9D6037" stroke="#542F1C" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M25 641C98 632 213 632 285 643L285 710C216 700 94 699 25 708V641Z" fill="#9D6037" stroke="#542F1C" stroke-width="8" stroke-linejoin="round"/>
+  <ellipse cx="263" cy="527" rx="26" ry="29" fill="url(#knob)" stroke="#4D351D" stroke-width="8"/>
+</svg>

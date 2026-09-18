@@ -1,0 +1,989 @@
+@font-face {
+  font-family: "Memoment Kkukkukk";
+  src: url("./assets/fonts/MemomentKkukkukk.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 450;
+  font-display: swap;
+}
+
+:root {
+  --scene-background: #fad7d7;
+  font-family: "Memoment Kkukkukk", Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  color: #111318;
+  background: var(--scene-background);
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--scene-background);
+}
+
+button { font: inherit; color: inherit; }
+button:focus-visible { outline: 4px solid #588fb2; outline-offset: 5px; }
+
+.game {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--scene-background);
+}
+
+.musicVolumeControl {
+  position: fixed;
+  z-index: 30;
+  top: 2.5%;
+  right: 12.2%;
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.65vw, 11px);
+  width: clamp(205px, 19vw, 285px);
+  padding: clamp(7px, 0.65vw, 11px) clamp(10px, 0.9vw, 16px);
+  border: clamp(2px, 0.2vw, 3px) solid #83abc3;
+  border-radius: 999px;
+  background: rgba(217, 237, 248, 0.94);
+  color: #314d5f;
+  box-shadow: 0 max(3px, 0.35vw) 0 rgba(88, 125, 148, 0.72);
+  font-size: clamp(11px, 1vw, 17px);
+  font-weight: 800;
+}
+
+.musicVolumeLabel { white-space: nowrap; }
+
+.musicVolumeControl input {
+  min-width: 0;
+  flex: 1;
+  accent-color: #6e9fbd;
+  cursor: pointer;
+}
+
+.musicVolumeControl output {
+  width: 3.1em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.scene {
+  width: 100vw;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--scene-background);
+}
+
+.clickableScene { cursor: pointer; }
+
+.figmaStage {
+  position: relative;
+  width: min(100vw, calc(100dvh * 1.547));
+  aspect-ratio: 1728 / 1117;
+  max-height: 100dvh;
+  overflow: hidden;
+  background: var(--scene-background);
+}
+
+/* Door */
+.doorHud {
+  position: absolute;
+  z-index: 6;
+  left: 0.01%;
+  top: 5.2%;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(8px, 1.2vw, 20px);
+  max-width: 48%;
+}
+
+.heartTemperature {
+  position: relative;
+  z-index: 5;
+  flex: 0 1 clamp(150px, 20vw, 300px);
+  width: clamp(150px, 20vw, 300px);
+  min-width: 140px;
+  color: #473b3b;
+}
+
+.heartTemperatureHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: clamp(7px, 0.75vw, 13px);
+  font-size: clamp(15px, 1.65vw, 28px);
+}
+
+.heartTemperatureHeader strong { font-weight: 800; }
+.heartTemperatureHeader span { color: #d85f68; font-weight: 800; }
+
+.thermometer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: clamp(22px, 2.25vw, 39px);
+}
+
+.thermometerBulb {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  width: clamp(28px, 3vw, 52px);
+  aspect-ratio: 1;
+  border: clamp(3px, 0.3vw, 5px) solid #bd7780;
+  border-radius: 50%;
+  background: #ef7780;
+  box-shadow: inset 0 0 0 clamp(4px, 0.4vw, 7px) #ffeaea;
+}
+
+.thermometerTrack {
+  position: relative;
+  flex: 1;
+  height: 52%;
+  margin-left: clamp(-8px, -0.55vw, -4px);
+  overflow: hidden;
+  border: clamp(3px, 0.25vw, 4px) solid #bd7780;
+  border-left: 0;
+  border-radius: 0 999px 999px 0;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.thermometerFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ef7780, #e95663);
+  transition: width 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.thermometerScale {
+  display: flex;
+  justify-content: space-between;
+  padding-left: clamp(30px, 3.2vw, 55px);
+  margin-top: 3px;
+  color: #8d7174;
+  font-size: clamp(9px, 0.8vw, 14px);
+  font-weight: 650;
+}
+
+.starCounter,
+.gratitudeStarCounter {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.8vw, 14px);
+  padding: clamp(7px, 0.65vw, 12px) clamp(12px, 1.1vw, 20px);
+  border: clamp(3px, 0.3vw, 5px) solid #c78326;
+  border-radius: 999px;
+  background: rgba(255, 249, 220, 0.94);
+  color: #72491f;
+  box-shadow: 0 clamp(4px, 0.45vw, 8px) 0 rgba(132, 77, 24, 0.22);
+  font-size: clamp(15px, 1.55vw, 27px);
+}
+
+.starCounter {
+  position: relative;
+  z-index: 6;
+  flex: 0 0 auto;
+}
+
+.starSticker {
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 3.5vw, 60px);
+  aspect-ratio: 1;
+  border: clamp(3px, 0.26vw, 5px) solid #d38b20;
+  border-radius: 50%;
+  background: #ffd84d;
+  color: #fff8cf;
+  text-shadow: 0 2px 0 #bd731c;
+  box-shadow: inset 0 0 0 clamp(3px, 0.3vw, 5px) #ffec8f;
+  font-size: clamp(22px, 2.3vw, 40px);
+  line-height: 1;
+}
+
+.closedDoor {
+  position: absolute;
+  left: 31.54%;
+  top: 13.52%;
+  width: 37.44%;
+  height: 75.56%;
+  padding: 0;
+  overflow: hidden;
+  border: clamp(7px, 0.75vw, 13px) solid #542f1c;
+  border-radius: 50% 50% 4% 4% / 30% 30% 4% 4%;
+  background:
+    linear-gradient(90deg, transparent 0 18%, rgba(73, 35, 19, 0.2) 18.5% 20%, transparent 20.5% 39%, rgba(73, 35, 19, 0.2) 39.5% 41%, transparent 41.5% 61%, rgba(73, 35, 19, 0.2) 61.5% 63%, transparent 63.5% 81%, rgba(73, 35, 19, 0.2) 81.5% 83%, transparent 83.5%),
+    linear-gradient(105deg, #a5683f 0%, #894f2a 44%, #78401f 100%);
+  cursor: pointer;
+  transition: transform 180ms ease;
+  box-shadow:
+    inset clamp(8px, 1vw, 17px) 0 0 rgba(255, 210, 160, 0.16),
+    inset clamp(-12px, -0.8vw, -7px) 0 0 rgba(67, 30, 16, 0.23),
+    0 clamp(8px, 1vw, 17px) 0 #3f281d,
+    0 clamp(16px, 1.8vw, 31px) clamp(22px, 2.8vw, 48px) rgba(75, 42, 29, 0.22);
+}
+
+.closedDoor:hover { transform: translateY(-0.8%) scale(1.008); }
+
+.doorSoftHighlight {
+  position: absolute;
+  left: 7%;
+  top: 5%;
+  width: 13%;
+  height: 80%;
+  border-radius: 999px;
+  background: rgba(255, 220, 177, 0.16);
+  transform: rotate(3deg);
+}
+
+.doorPlank {
+  position: absolute;
+  top: 18%;
+  bottom: 4%;
+  width: clamp(4px, 0.42vw, 7px);
+  border-radius: 999px;
+  background: #60351f;
+  opacity: 0.55;
+  box-shadow: clamp(4px, 0.45vw, 8px) 0 0 rgba(224, 151, 91, 0.18);
+}
+
+.doorPlankOne { left: 21%; transform: rotate(-1deg); }
+.doorPlankTwo { left: 48%; top: 5%; transform: rotate(0.8deg); }
+.doorPlankThree { left: 76%; transform: rotate(-0.7deg); }
+
+.doorBrace {
+  position: absolute;
+  left: 5%;
+  width: 90%;
+  height: 8.5%;
+  border: clamp(4px, 0.38vw, 7px) solid #542f1c;
+  border-radius: 45% 55% 42% 58% / 30% 42% 58% 70%;
+  background: #9d6037;
+  box-shadow: inset 0 clamp(4px, 0.35vw, 6px) 0 rgba(255, 211, 162, 0.12);
+}
+
+.doorBraceTop { top: 45%; transform: rotate(-1.4deg); }
+.doorBraceBottom { top: 75%; transform: rotate(1deg); }
+
+.doorNameplate {
+  position: absolute;
+  z-index: 2;
+  left: 31%;
+  top: 55%;
+  width: 38%;
+  padding: 2.5% 2%;
+  border: clamp(3px, 0.3vw, 5px) solid #59341f;
+  border-radius: 38% 45% 40% 48% / 35% 42% 38% 50%;
+  background: #d99a58;
+  color: #59341f;
+  font-size: clamp(18px, 1.1vw, 19px);
+  font-weight: 1000;
+  letter-spacing: 0.04em;
+  box-shadow: 0 clamp(3px, 0.35vw, 6px) 0 rgba(55, 27, 15, 0.28);
+}
+
+.doorKnob {
+  position: absolute;
+  z-index: 3;
+  right: 9%;
+  top: 62%;
+  width: 9%;
+  aspect-ratio: 1;
+  border: clamp(4px, 0.38vw, 7px) solid #4d351d;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #ffe3a0 0 12%, #d59b3e 17% 53%, #82521f 57% 100%);
+  box-shadow: 0 clamp(3px, 0.35vw, 6px) 0 rgba(52, 29, 18, 0.3);
+}
+
+.doorPrompt,
+.storyContinue {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  font-size: clamp(17px, 2.78vw, 48px);
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.storyHomeButton {
+  position: absolute;
+  z-index: 7;
+  left: 2.4%;
+  bottom: 4%;
+  padding: 0.8% 1.5%;
+  border: clamp(3px, 0.28vw, 5px) solid #83abc3;
+  border-radius: 999px;
+  background: #d9edf8;
+  color: #314d5f;
+  box-shadow: 0 max(3px, 0.4vw) 0 #7b9eb3;
+  font-size: clamp(13px, 1.25vw, 22px);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.doorPrompt {
+  left: 74.83%;
+  top: 82.9%;
+  width: 25.17%;
+  text-align: left;
+}
+
+.doorPrompt kbd { font: inherit; }
+
+/* Open door / story */
+.openDoorArt {
+  position: absolute;
+  z-index: 2;
+  left: 31.25%;
+  top: 13.16%;
+  width: 17.88%;
+  height: 73.77%;
+}
+
+.storyToy {
+  position: absolute;
+  z-index: 1;
+  left: 39.5%;
+  top: 48.97%;
+  width: 24.88%;
+  height: 37.96%;
+}
+
+.storyToy-elephant {
+  left: 39.5%;
+  top: 48.97%;
+  width: 24.88%;
+  height: 37.96%;
+}
+
+.storyToy-tiger {
+  left: 38.8%;
+  top: 45.5%;
+  width: 22.5%;
+  height: 41%;
+}
+
+.storyToy-horse {
+  left: 39.4%;
+  top: 43.5%;
+  width: 20.5%;
+  height: 43.5%;
+}
+
+.toy, .toyImage { width: 100%; height: 100%; }
+.toy { display: grid; place-items: center; }
+.toyImage { display: block; object-fit: contain; }
+
+.storyCard {
+  position: absolute;
+  z-index: 3;
+  left: 64.7%;
+  top: 14%;
+  width: 29%;
+  min-height: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5% 3%;
+  background: #d9d9d9;
+  color: #111;
+  font-size: clamp(12px, 1.25vw, 22px);
+  line-height: 1.55;
+  text-align: left;
+  word-break: keep-all;
+  box-shadow:
+    0 0 0 clamp(3px, 0.28vw, 5px) rgba(122, 151, 169, 0.22),
+    0 clamp(8px, 0.8vw, 14px) 0 rgba(73, 96, 110, 0.2),
+    0 clamp(14px, 1.4vw, 24px) clamp(18px, 1.8vw, 31px) rgba(62, 80, 91, 0.12);
+}
+
+.storyCard > * {
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+.storyCard > strong {
+  display: block;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.storyCard h2 {
+  margin: 0.48em 0 0;
+  font-size: 1.45em;
+  line-height: 1.28;
+}
+
+.storyCard p {
+  margin: 0.68em 0 0;
+  line-height: 1.52;
+}
+
+.storyRequest {
+  font-weight: 700;
+  text-wrap: pretty;
+}
+
+.storyContinue {
+  right: 4%;
+  bottom: 4%;
+  font-size: clamp(14px, 1.55vw, 27px);
+}
+
+/* Repair */
+.repairBackButton {
+  position: absolute;
+  z-index: 7;
+  left: 2.4%;
+  bottom: 8.51%;
+  padding: 0.8% 1.5%;
+  border: clamp(3px, 0.28vw, 5px) solid #83abc3;
+  border-radius: 999px;
+  background: #d9edf8;
+  color: #314d5f;
+  box-shadow: 0 max(3px, 0.4vw) 0 #7b9eb3;
+  font-size: clamp(13px, 1.25vw, 22px);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+
+.repairBackButton:hover {
+  transform: translateY(-3%);
+  filter: brightness(0.98);
+}
+
+.repairBackButton span {
+  display: inline-block;
+  margin-right: 0.35em;
+}
+
+.repairScene.isCompleting {
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
+
+.repairSpeech,
+.doneSpeech {
+  position: absolute;
+  z-index: 4;
+  left: 6.37%;
+  top: 5.55%;
+  width: 49.19%;
+  height: 17.82%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45em;
+  padding: 2.2% 3.2%;
+  background: #bdd9ea;
+  color: #111;
+  font-size: clamp(12px, 1.55vw, 27px);
+  line-height: 1.35;
+  box-shadow:
+    0 0 0 clamp(3px, 0.3vw, 5px) rgba(114, 159, 187, 0.26),
+    0 clamp(8px, 0.82vw, 14px) 0 rgba(89, 139, 170, 0.28),
+    0 clamp(15px, 1.5vw, 26px) clamp(20px, 2vw, 35px) rgba(67, 105, 129, 0.13);
+}
+
+.repairSpeechTail,
+.doneSpeechTail {
+  position: absolute;
+  z-index: 3;
+  left: 40.2%;
+  top: 14.95%;
+  width: 7.39%;
+  height: 16.8%;
+  filter: drop-shadow(clamp(3px, 0.35vw, 6px) clamp(6px, 0.62vw, 11px) 0 rgba(89, 139, 170, 0.24));
+}
+
+.repairStageShadow,
+.doneStageShadow {
+  position: absolute;
+  z-index: 1;
+  left: 13.02%;
+  top: 55.15%;
+  width: 31.89%;
+  height: 15.22%;
+}
+
+.repairToySlot,
+.doneToySlot {
+  position: absolute;
+  z-index: 2;
+  left: 16.52%;
+  top: 29.63%;
+  width: 24.91%;
+  height: 37.96%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.repairToySlot { cursor: pointer; }
+.repairToySlot .toyImage,
+.doneToySlot .toyImage { object-position: center bottom; }
+
+.repairToySlot .toy-tiger .toyImage,
+.doneToySlot .toy-tiger .toyImage { transform: translateY(1.5%) scale(0.96); }
+
+.repairToySlot .toy-horse .toyImage,
+.doneToySlot .toy-horse .toyImage { transform: translateY(1.5%) scale(0.94); }
+
+.repairToySlot.toyReady .toyImage { filter: drop-shadow(0 0 12px rgba(83, 135, 165, 0.38)); }
+.repairTools { position: absolute; inset: 0; }
+
+.repairTool,
+.threadTool,
+.needleTool,
+.completeButton,
+.restartButton {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease, opacity 160ms ease;
+}
+
+.repairTool:hover:not(:disabled),
+.threadTool:hover:not(:disabled),
+.needleTool:hover:not(:disabled) {
+  transform: scale(1.06);
+  filter: brightness(0.97);
+}
+
+.repairTool:disabled,
+.threadTool:disabled,
+.needleTool:disabled { cursor: default; opacity: 0.45; }
+
+.repairTool img,
+.threadTool img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.repairTool img {
+  object-fit: contain;
+  padding: 6%;
+}
+
+.repairTool span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(10px, 1.15vw, 20px);
+  font-weight: 750;
+}
+
+.buttonTool {
+  left: 61.55%;
+  top: 15.9%;
+  width: 9.7%;
+  height: 14.7%;
+  background: transparent;
+  transform: translate(var(--drag-x, 0), var(--drag-y, 0));
+  touch-action: none;
+  user-select: none;
+  z-index: 7;
+}
+
+.buttonTool:hover:not(:disabled) {
+  transform: translate(var(--drag-x, 0), var(--drag-y, 0)) scale(1.06);
+}
+
+.buttonTool.dragging {
+  cursor: grabbing;
+  transform: translate(var(--drag-x, 0), var(--drag-y, 0)) scale(1.08);
+  filter: drop-shadow(0 8px 7px rgba(70, 90, 105, 0.34));
+}
+
+.buttonDropTarget {
+  position: absolute;
+  z-index: 4;
+  border: clamp(2px, 0.22vw, 4px) dashed #6c9db9;
+  border-radius: 50%;
+  background: rgba(189, 217, 234, 0.22);
+  pointer-events: none;
+  animation: targetPulse 1.2s ease-in-out infinite alternate;
+}
+
+.cottonTool {
+  left: 61.55%;
+  top: 56.75%;
+  width: 9.7%;
+  height: 14.7%;
+  background: transparent;
+}
+
+.repairTool.selected,
+.threadTool.selected { filter: drop-shadow(0 0 9px #6b9fbd); }
+
+.repairTool.selected::after,
+.threadTool.selected::after {
+  content: "";
+  position: absolute;
+  inset: -7%;
+  border: max(2px, 0.22vw) solid #5b8faa;
+  border-radius: 50%;
+}
+
+.threadOptions {
+  position: absolute;
+  left: 73.32%;
+  top: 37.6%;
+  width: 19.61%;
+  height: 12.09%;
+  display: flex;
+  gap: 11.5%;
+}
+
+.threadTool {
+  position: relative;
+  flex: 0 0 25.64%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.threadTool img { opacity: 0.46; mix-blend-mode: multiply; }
+
+.needleTool {
+  left: 62.9%;
+  top: 37.1%;
+  width: 8.4%;
+  height: 13.5%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+.needleTool img {
+  width: 100%;
+  height: 100%;
+  padding: 6%;
+  object-fit: contain;
+}
+
+.needleLine {
+  width: 3px;
+  height: 62%;
+  border-radius: 999px;
+  background: #454b53;
+  transform: rotate(35deg);
+}
+
+.needleTool span:last-child {
+  position: absolute;
+  right: 8%;
+  bottom: 7%;
+  font-size: clamp(8px, 0.8vw, 14px);
+}
+
+.stitchMark {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  pointer-events: none;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.28));
+}
+
+.stitchMark::before,
+.stitchMark span {
+  content: "";
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.stitchMark::before {
+  left: 5%;
+  top: 44%;
+  width: 90%;
+  height: clamp(4px, 0.48vw, 8px);
+}
+
+.stitchMark span {
+  top: 4%;
+  width: clamp(4px, 0.48vw, 8px);
+  height: 92%;
+  transform: rotate(38deg);
+}
+
+.stitchMark span:nth-child(1) { left: 18%; }
+.stitchMark span:nth-child(2) { left: 48%; }
+.stitchMark span:nth-child(3) { left: 78%; }
+
+.sewingCanvas {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.repairStage.sewingMode::after {
+  content: "";
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  background: rgba(255, 234, 234, 0.4);
+}
+
+.sewingFocus {
+  position: absolute;
+  z-index: 10;
+  left: 18%;
+  top: 24%;
+  width: 42%;
+  height: 52%;
+  overflow: hidden;
+  border: clamp(4px, 0.45vw, 8px) solid #bdd9ea;
+  border-radius: clamp(18px, 2vw, 34px);
+  background-color: #ffeaea;
+  background-repeat: no-repeat;
+  background-size: auto 320%;
+  box-shadow: 0 18px 48px rgba(54, 70, 80, 0.3);
+  touch-action: none;
+}
+
+.sewingGuide,
+.sewingTrace {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sewingGuide {
+  stroke: #e53935;
+  stroke-width: clamp(3px, 0.32vw, 5px);
+  stroke-dasharray: 8 9;
+  opacity: 0.9;
+}
+
+.sewingTrace {
+  stroke: currentColor;
+  stroke-width: clamp(5px, 0.52vw, 9px);
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.25));
+}
+
+@keyframes targetPulse {
+  from { opacity: 0.45; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+
+.completeButton {
+  left: 73.32%;
+  top: 78.42%;
+  width: 21%;
+  height: 13.07%;
+  background: #d9d9d9;
+  font-size: clamp(13px, 1.55vw, 27px);
+  font-weight: 750;
+}
+
+.completeButton:disabled { color: #777; cursor: not-allowed; }
+
+.completeButton:not(:disabled) {
+  background: #94bdd7;
+  box-shadow: 0 max(3px, 0.55vw) 0 #628ba5;
+  transform: translateY(-4%);
+}
+
+/* Complete */
+.doneSpeech { background: #bdd9ea; }
+
+.doneScene,
+.gratitudeScene {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.doneScene img,
+.gratitudeScene img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.restartButton {
+  right: 6%;
+  bottom: 7%;
+  width: 17%;
+  height: 9%;
+  background: #bdd9ea;
+  box-shadow: 0 max(3px, 0.45vw) 0 #7b9eb3;
+  font-size: clamp(13px, 1.45vw, 25px);
+  font-weight: 750;
+}
+
+/* 100-degree gratitude scene */
+.gratitudeStage {
+  text-align: center;
+}
+
+.gratitudeScene { cursor: grab; }
+.gratitudeScene:active { cursor: grabbing; }
+
+.gratitudeStarCounter {
+  position: absolute;
+  z-index: 6;
+  top: 5.2%;
+  right: 5.2%;
+}
+
+.starPlus {
+  position: absolute;
+  right: 5%;
+  top: 100%;
+  color: #e1811d;
+  font-size: 0.7em;
+  font-weight: 900;
+}
+
+.gratitudeMessage {
+  position: absolute;
+  z-index: 3;
+  left: 22%;
+  top: 7%;
+  width: 56%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 2.1% 3%;
+  border: clamp(4px, 0.4vw, 7px) solid #94bdd7;
+  border-radius: clamp(18px, 2vw, 34px);
+  background: #d9edf8;
+  color: #314d5f;
+  font-size: clamp(18px, 2vw, 34px);
+  box-shadow:
+    0 0 0 clamp(3px, 0.3vw, 5px) rgba(114, 159, 187, 0.28),
+    0 clamp(8px, 0.85vw, 15px) 0 rgba(89, 139, 170, 0.3),
+    0 clamp(15px, 1.5vw, 26px) clamp(20px, 2vw, 35px) rgba(67, 105, 129, 0.15);
+}
+
+.gratitudeMessage strong {
+  color: #d67828;
+  font-size: 1.35em;
+}
+
+.gratitudeToys {
+  position: absolute;
+  left: 14%;
+  top: 30%;
+  width: 72%;
+  height: 44%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3%;
+}
+
+.gratitudeToy {
+  width: 29%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.gratitudeToy .toyImage {
+  object-position: center bottom;
+}
+
+.gratitudeToy-tiger .toyImage { transform: scale(0.94); }
+.gratitudeToy-horse .toyImage { transform: scale(0.9); }
+
+.gratitudeThanks {
+  position: absolute;
+  left: 24%;
+  top: 79%;
+  width: 52%;
+  margin: 0;
+  color: #5b453d;
+  font-size: clamp(20px, 2.5vw, 43px);
+  font-weight: 900;
+}
+
+.gratitudeButton {
+  position: absolute;
+  right: 5.5%;
+  bottom: 5.5%;
+  padding: 1.25% 2.4%;
+  border: 0;
+  border-radius: 999px;
+  background: #bdd9ea;
+  box-shadow: 0 max(3px, 0.5vw) 0 #7b9eb3;
+  font-size: clamp(13px, 1.4vw, 24px);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gratitudeToy {
+    animation: thankfulBow 2.4s ease-in-out var(--bow-delay) infinite;
+  }
+
+  .starPlus {
+    animation: starReward 1.2s ease-out both;
+  }
+
+  @keyframes thankfulBow {
+    0%, 18%, 68%, 100% { transform: translateY(0) rotate(0) scaleY(1); }
+    38%, 50% { transform: translateY(7%) rotate(3deg) scaleY(0.84); }
+  }
+
+  @keyframes starReward {
+    from { opacity: 0; transform: translateY(-80%) scale(0.4); }
+    45% { opacity: 1; transform: translateY(15%) scale(1.25); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .storyToy { animation: peek 650ms cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+  .doneToySlot { animation: celebrate 850ms ease-in-out both; }
+
+  @keyframes peek {
+    from { transform: translateX(-28%) rotate(-5deg); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+
+  @keyframes celebrate {
+    0%, 100% { transform: rotate(0); }
+    30% { transform: rotate(-3deg) translateY(-3%); }
+    65% { transform: rotate(3deg) translateY(-1%); }
+  }
+}
+
+@media (max-width: 640px) {
+  .storyCard {
+    left: 61%;
+    top: 8%;
+    width: 35%;
+    max-height: 39%;
+    overflow: hidden;
+  }
+
+  .storyCard p:not(.storyRequest) { display: none; }
+}
