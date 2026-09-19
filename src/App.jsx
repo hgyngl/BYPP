@@ -16,7 +16,7 @@ import { setBackgroundMusicVolume, startBackgroundMusic } from "./utils/cozyBack
 const DEBUG_TOY_ID = null;
 const DEBUG_DAMAGE = null;
 // temperature: 0 ~ 45. 40으로 설정하면 다음 수선에서 45도 보상을 확인할 수 있습니다.
-const DEBUG_HEART_TEMPERATURE = 40;
+const DEBUG_HEART_TEMPERATURE = null;
 const STAR_STORAGE_KEY = "dollRepairStarCountV2";
 const HEART_TEMPERATURE_GOAL = 45;
 
