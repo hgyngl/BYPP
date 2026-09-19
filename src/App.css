@@ -778,10 +778,43 @@ button:focus-visible { outline: 4px solid #588fb2; outline-offset: 5px; }
 }
 
 .sewingGuide {
-  stroke: #e53935;
+  /* 변경: 정답 점선의 색을 이번에 요구되는 실 색과 연결합니다. */
+  stroke: var(--guide-color, #e53935);
   stroke-width: clamp(3px, 0.32vw, 5px);
   stroke-dasharray: 8 9;
   opacity: 0.9;
+}
+
+.sewingCanvas.disabled { pointer-events: none; }
+
+/* 변경: 한붓그리기에 실패하면 이유와 재도전 버튼을 확대 화면에 표시합니다. */
+.sewingFailure {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  padding: 8%;
+  background: rgba(255, 234, 234, 0.9);
+  color: #6b3f3f;
+  text-align: center;
+  font-size: clamp(13px, 1.35vw, 23px);
+}
+
+.sewingFailure strong { font-size: 1.45em; color: #cf5353; }
+
+.sewingFailure button {
+  padding: 0.65em 1.4em;
+  border: 0;
+  border-radius: 999px;
+  background: #94bdd7;
+  box-shadow: 0 4px 0 #628ba5;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .sewingTrace {

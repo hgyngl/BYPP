@@ -2,13 +2,14 @@ import Toy from "./Toy";
 import speechTailArt from "../assets/speech-tail.svg";
 import stageArt from "../assets/stage.svg";
 
-function DoneRepair({ toy, onRestart }) {
+function DoneRepair({ toy, story, onRestart }) {
   return (
     <section className="scene figmaScene doneScene" aria-label="수선 완료">
       <div className="figmaStage doneStage">
         <div className="doneSpeech">
           <strong>고마워요!</strong>
-          <span>제가 꼭 안아 드릴게요</span>
+          {/* 변경: 선택된 랜덤 사연에 맞는 감사 인사를 이어서 보여줍니다. */}
+          <span>{story?.thanks ?? "제가 꼭 안아 드릴게요"}</span>
         </div>
         <img className="doneSpeechTail" src={speechTailArt} alt="" />
         <img className="doneStageShadow" src={stageArt} alt="" />

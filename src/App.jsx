@@ -7,7 +7,7 @@ import StoryScene from "./components/StoryScene";
 import DoneRepair from "./components/DoneRepair";
 import GratitudeScene from "./components/GratitudeScene";
 
-import { toys } from "./data";
+import { storyPools, toys } from "./data";
 import { playRepairSound } from "./utils/repairSounds";
 import { setBackgroundMusicVolume, startBackgroundMusic } from "./utils/cozyBackgroundMusic";
 
@@ -15,9 +15,10 @@ import { setBackgroundMusicVolume, startBackgroundMusic } from "./utils/cozyBack
 // toy: "horse" | "elephant" | "tiger", damage: "eye" | "stuffing"
 const DEBUG_TOY_ID = null;
 const DEBUG_DAMAGE = null;
-// temperature: 0 ~ 100. 95로 설정하면 다음 수선에서 100도 보상을 확인할 수 있습니다.
-const DEBUG_HEART_TEMPERATURE = null;
+// temperature: 0 ~ 45. 40으로 설정하면 다음 수선에서 45도 보상을 확인할 수 있습니다.
+const DEBUG_HEART_TEMPERATURE = 40;
 const STAR_STORAGE_KEY = "dollRepairStarCountV2";
+const HEART_TEMPERATURE_GOAL = 45;
 
 function randomItem(array) {
   return array[
@@ -29,9 +30,10 @@ function App() {
   const [scene, setScene] = useState("door");
   const [toy, setToy] = useState(null);
   const [damage, setDamage] = useState(null);
+  const [story, setStory] = useState(null);
   const [heartTemperature, setHeartTemperature] = useState(() => {
     const initialTemperature = DEBUG_HEART_TEMPERATURE ?? 0;
-    return Math.min(100, Math.max(0, initialTemperature));
+    return Math.min(HEART_TEMPERATURE_GOAL, Math.max(0, initialTemperature));
   });
   const [starCount, setStarCount] = useState(() => {
     const savedCount = Number.parseInt(localStorage.getItem(STAR_STORAGE_KEY) ?? "0", 10);
@@ -49,15 +51,17 @@ function App() {
       : randomItem(toys);
 
     const newDamage = DEBUG_DAMAGE ?? randomItem(["eye", "stuffing"]);
+    const newStory = randomItem(storyPools[newDamage]);
 
     setToy(newToy);
     setDamage(newDamage);
+    setStory(newStory);
   }, []);
 
   const openDoor = useCallback(() => {
     playRepairSound("doorClick");
     if (DEBUG_HEART_TEMPERATURE !== null) {
-      setHeartTemperature(Math.min(100, Math.max(0, DEBUG_HEART_TEMPERATURE)));
+      setHeartTemperature(Math.min(HEART_TEMPERATURE_GOAL, Math.max(0, DEBUG_HEART_TEMPERATURE)));
     }
     createCustomer();
     setScene("story");
@@ -72,20 +76,21 @@ function App() {
   }, []);
 
   const finishRepair = useCallback(() => {
-    if (heartTemperature >= 95) {
+    if (heartTemperature >= HEART_TEMPERATURE_GOAL - 5) {
       setHeartTemperature(0);
       setStarCount((count) => Math.min(99999, count + 1));
       setScene("gratitude");
       return;
     }
 
-    setHeartTemperature(heartTemperature + 5);
+    setHeartTemperature(Math.min(HEART_TEMPERATURE_GOAL, heartTemperature + 5));
     setScene("done");
   }, [heartTemperature]);
 
   const restart = useCallback(() => {
     setToy(null);
     setDamage(null);
+    setStory(null);
     setScene("door");
   }, []);
 
@@ -174,6 +179,7 @@ function App() {
         <DoorScene
           onNext={openDoor}
           temperature={heartTemperature}
+          temperatureGoal={HEART_TEMPERATURE_GOAL}
           starCount={starCount}
         />
       )}
@@ -184,6 +190,7 @@ function App() {
           <StoryScene
             toy={toy}
             damage={damage}
+            story={story}
             onNext={startRepair}
             onHome={restart}
           />
@@ -203,6 +210,7 @@ function App() {
       {scene === "done" && toy && damage && (
         <DoneRepair
           toy={toy}
+          story={story}
           onRestart={restart}
         />
       )}
@@ -210,6 +218,7 @@ function App() {
       {scene === "gratitude" && (
         <GratitudeScene
           starCount={starCount}
+          temperatureGoal={HEART_TEMPERATURE_GOAL}
           onRestart={restart}
         />
       )}

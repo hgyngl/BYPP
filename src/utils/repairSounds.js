@@ -17,6 +17,11 @@ const SOUND_PATTERNS = {
     { frequency: 440, delay: 0, duration: 0.09, volume: 0.35 },
     { frequency: 660, delay: 0.09, duration: 0.14, volume: 0.4 }
   ],
+  // 변경: 한붓그리기 실패를 짧고 부드러운 하강음으로 알려줍니다.
+  repairFail: [
+    { frequency: 392, delay: 0, duration: 0.11, volume: 0.2 },
+    { frequency: 294, delay: 0.09, duration: 0.16, volume: 0.18 }
+  ],
   complete: [
     { frequency: 523, delay: 0, duration: 0.12, volume: 0.45 },
     { frequency: 659, delay: 0.11, duration: 0.14, volume: 0.45 },

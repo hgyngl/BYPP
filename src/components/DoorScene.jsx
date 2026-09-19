@@ -1,4 +1,4 @@
-function DoorScene({ onNext, temperature, starCount }) {
+function DoorScene({ onNext, temperature, temperatureGoal, starCount }) {
   return (
     <section className="scene figmaScene doorScene" aria-label="닫힌 문">
       <div className="figmaStage doorStage">
@@ -13,15 +13,15 @@ function DoorScene({ onNext, temperature, starCount }) {
               <strong>마음의 온도</strong>
               <span>{temperature}°C</span>
             </div>
-            <div className="thermometer" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={temperature}>
+            <div className="thermometer" role="progressbar" aria-valuemin="0" aria-valuemax={temperatureGoal} aria-valuenow={temperature}>
               <span className="thermometerBulb" aria-hidden="true" />
               <span className="thermometerTrack" aria-hidden="true">
-                <span className="thermometerFill" style={{ width: `${temperature}%` }} />
+                <span className="thermometerFill" style={{ width: `${(temperature / temperatureGoal) * 100}%` }} />
               </span>
             </div>
             <div className="thermometerScale" aria-hidden="true">
               <span>0°</span>
-              <span>100°</span>
+              <span>{temperatureGoal}°</span>
             </div>
           </div>
         </div>

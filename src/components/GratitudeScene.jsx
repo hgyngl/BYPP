@@ -1,9 +1,9 @@
 import { toys } from "../data";
 import Toy from "./Toy";
 
-function GratitudeScene({ starCount, onRestart }) {
+function GratitudeScene({ starCount, temperatureGoal, onRestart }) {
   return (
-    <section className="scene figmaScene gratitudeScene" aria-label="마음의 온도 100도 달성">
+    <section className="scene figmaScene gratitudeScene" aria-label={`마음의 온도 ${temperatureGoal}도 달성`}>
       <div className="figmaStage gratitudeStage">
         <div className="gratitudeStarCounter" aria-label={`별 스티커 ${starCount}개`}>
           <span className="starSticker" aria-hidden="true">★</span>
@@ -12,7 +12,7 @@ function GratitudeScene({ starCount, onRestart }) {
         </div>
 
         <div className="gratitudeMessage">
-          <strong>마음의 온도 100°C!</strong>
+          <strong>마음의 온도 {temperatureGoal}°C!</strong>
           <span>따뜻하게 고쳐줘서 정말 고마워요.</span>
         </div>
 

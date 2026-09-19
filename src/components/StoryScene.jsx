@@ -4,6 +4,7 @@ import doorArt from "../assets/door.svg";
 function StoryScene({
   toy,
   damage,
+  story,
   onNext,
   onHome
 }) {
@@ -31,9 +32,10 @@ function StoryScene({
 
         <div className="storyCard">
           <strong>{toy.name}</strong>
-          <h2>{toy.stories[damage].title}</h2>
-          <p>{toy.stories[damage].story}</p>
-          <p className="storyRequest">“{toy.stories[damage].request}”</p>
+          {/* 변경: 인형과 독립적으로 매번 섞인 랜덤 사연을 표시합니다. */}
+          <h2>{story.title}</h2>
+          <p>{story.story}</p>
+          <p className="storyRequest">“{story.request}”</p>
         </div>
 
         
